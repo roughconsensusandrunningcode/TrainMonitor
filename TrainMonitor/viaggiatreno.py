@@ -46,6 +46,7 @@ class API:
             'cercaStazione':      _decode_json,
             'tratteCanvas':       _decode_json,
             'dettaglioStazione':  _decode_json,
+            'regione':            _decode_json,
             'cercaNumeroTrenoTrenoAutocomplete': _decode_cercaNumeroTrenoTrenoAutocomplete,
             'autocompletaStazione': _decode_autocompletaStazione
         }
