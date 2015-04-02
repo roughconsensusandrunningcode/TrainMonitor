@@ -3,6 +3,7 @@ A set of python script to download and process data of Italian railways site www
 
 * TrainMonitor/
   *  viaggiatreno.py - a simple interface to viaggiatreno.it API
+  *  dateutils.py - utilities for Italian holidays and other date operations
 
 * test/ - Unit tests
     
