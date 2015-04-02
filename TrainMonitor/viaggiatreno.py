@@ -5,7 +5,20 @@ import os
 try:
     from urllib.request import urlopen
 except ImportError:
-    from urllib import urlopen    
+    from urllib import urlopen  
+    
+class Utils:
+    __path = os.path.join(os.path.dirname(__file__), 'vt_data', 'stationIDs.json')
+    with open(__path, 'r') as fp:
+        __stationsIDs = json.load(fp)
+
+    @staticmethod
+    def station_from_ID (station_ID):
+        return Utils.__stationsIDs.get(station_ID, 'UNKNOWN')
+
+    @staticmethod
+    def exists_station_ID (station_ID):
+        return station_ID in Utils.__stationsIDs  
 
 # Decoders for API Output - TODO: Proper error handling
 def _decode_json (s):
