@@ -1,6 +1,8 @@
 import json
 import re
 import os
+import datetime
+from TrainMonitor import dateutils
 
 try:
     from urllib.request import urlopen
@@ -18,7 +20,40 @@ class Utils:
 
     @staticmethod
     def exists_station_ID (station_ID):
-        return station_ID in Utils.__stationsIDs  
+        return station_ID in Utils.__stationsIDs
+        
+    @staticmethod
+    def train_runs_on_date (train_info, date):
+        # trainInfo['runs_on'] flag:
+        # G    Runs every day
+        # FER5 Runs only Monday to Friday (holidays excluded)
+        # FER6 Runs only Monday to Saturday (holidays excluded)
+        # FEST Runs only on Sunday and holidays
+        runs_on   = train_info.get ('runs_on', 'G')
+        suspended = train_info.get ('suspended', [])
+
+        for from_, to in suspended:
+            ymd = date.strftime('%Y-%m-%d')
+            if ymd >= from_ and ymd <= to:
+                return False
+        
+        if runs_on == 'G':
+            return True
+            
+        wd  = date.weekday()
+           
+        if runs_on == 'FEST':
+           return dateutils.is_holiday(date) or wd == 6
+           
+        if dateutils.is_holiday(date):
+            return False
+         
+        if runs_on == 'FER6' and wd < 6:
+            return True
+        if runs_on == 'FER5' and wd < 5:
+            return True
+        
+        return False
 
 # Decoders for API Output - TODO: Proper error handling
 def _decode_json (s):
