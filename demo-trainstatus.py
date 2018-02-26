@@ -23,7 +23,10 @@ if __name__ == '__main__':
         
     trainNumber = int(sys.argv[1])
     api = viaggiatreno.API()
-    
+
+    # "cercaNumeroTrenoTrenoAutocomplete is the viaggiatreno API call that returns the starting station
+    # for the train number specified as its argument.
+    # Unfortunately that could return more than one station.
     departures = api.call('cercaNumeroTrenoTrenoAutocomplete', trainNumber)
     
     if len(departures) == 0:
@@ -32,7 +35,13 @@ if __name__ == '__main__':
         
     # TODO: handle not unique train numbers, when len(departures) > 1
 
+    # each result has two elements, the name of the station [0] and its ID [1].
+    # we only care about the first result here (TODO)
+    # Therefore, departures[0][1] is the station ID element #1 of the first result [0].
     departure_ID = departures[0][1]
+
+    # This fetches the status for that train number from that departure_ID we just fetched.
+    # It is required by viaggiatreno.it APIs.
     train_status = api.call('andamentoTreno', departure_ID, trainNumber)
 
     if train_status['tipoTreno'] == 'ST' or train_status['provvedimento'] == 1:
