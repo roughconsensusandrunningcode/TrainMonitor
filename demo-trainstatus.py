@@ -42,18 +42,22 @@ if __name__ == '__main__':
 
     # This fetches the status for that train number from that departure_ID we just fetched.
     # It is required by viaggiatreno.it APIs.
+    # train_status also includes the whole list of stops for that train (used a few lines later on).
     train_status = api.call('andamentoTreno', departure_ID, trainNumber)
 
+    # in these cases, the train has been cancelled.
     if train_status['tipoTreno'] == 'ST' or train_status['provvedimento'] == 1:
         print ("Train {0} cancelled".format(trainNumber))
-        
+
+    # otherwise, it is checked whether the train is running or if it's not yet.
     elif train_status['oraUltimoRilevamento'] is None:
         print ("Train {0} has not yet departed".format(trainNumber))
         print ("Scheduled departure {0} from {1}".format(
             format_timestamp (train_status['orarioPartenza']),
             train_status['origine']
         ))
-        
+
+    # finally, if the train is up and running
     else:
         if train_status['tipoTreno'] in ('PP', 'SI', 'SF'):
             print ("Train partially cancelled: ", train_status['subTitle'])
@@ -63,6 +67,7 @@ if __name__ == '__main__':
             format_timestamp(train_status['oraUltimoRilevamento'])
         ))
 
+        # each stop is processed and outputted on the console with the relevant informations.
         for f in train_status['fermate']:
             station   = f['stazione']
             scheduled = format_timestamp(f['programmata'])
@@ -74,13 +79,15 @@ if __name__ == '__main__':
                 actual = format_timestamp(f['arrivoReale'])
                 delay  = f['ritardoArrivo']
                 descr  = 'Arrival'
-            
-            description  = '{0} {1}: {2} (scheduled {3} - delay: {4})'.format(station, descr, actual, scheduled, delay)
-                
+
+            # the output line is formatted according to the available data:
             if f['actualFermataType'] == 3:
-                print (station, "cancelled")
+                station_output  = '{:40} cancelled'.format(station)
             elif f['actualFermataType'] == 0:
-                print (station, "data not available")
+                station_output  = '{:40} data not available'.format(station)
             else:
-                print (description)
+                station_output  = '{:40} {}: {} (scheduled {} - delay: {})'.format(station, descr, actual, scheduled, delay)
+
+            # there we go
+            print (station_output)
                 
