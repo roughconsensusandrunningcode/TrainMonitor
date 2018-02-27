@@ -18,7 +18,8 @@ def format_timestamp(ts, fmt='%H:%M:%S'):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print ("Usage: trainstatus.py <trainNumber>")
+        import os
+        print ("Usage: " + os.path.basename(__file__) + " <trainNumber>")
         sys.exit()
         
     trainNumber = int(sys.argv[1])
