@@ -7,7 +7,8 @@ A set of python script to download and process data of Italian railways site www
 
 * test/ - Unit tests
     
-* demo-dumpstations.py - dumps informations about Italian railway stations, in CSV and GeoJSON format (a dump updated to 2015-04-01 can be downloaded here: https://gist.github.com/bluviolin/b73a5166085ad2a4df9e)
+* demo-dumpstations.py - dumps informations about Italian railway stations, in CSV and GeoJSON format (a dump updated to 2018-02-26 can be downloaded here: 
+https://gist.github.com/febs/39d373bf876caed20fdfc8cf4cf4921f
 
 * demo-trainstatus.py - display train running status informations, given the train number
 

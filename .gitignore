@@ -4,3 +4,6 @@ __pycache__/
 
 # data directory
 data/
+
+# IDE
+.idea

@@ -100,7 +100,7 @@ with open(os.path.join(destdir, 'stations.geojson'), 'w') as fp:
     
 with open(os.path.join(destdir, 'stations.csv'), 'w') as fp:
     csv_fields = itemgetter('name', 'id', 'region', 'region_code', 'city', 'lat', 'lon')
-    wr = csv.writer(fp, delimiter=';', lineterminator='\n')
+    wr = csv.writer(fp, delimiter=',', lineterminator='\n')
     wr.writerow(('name', 'id', 'region', 'region_code', 'city', 'lat', 'lon'))
     for row in as_csv:
         wr.writerow(csv_fields(row))
