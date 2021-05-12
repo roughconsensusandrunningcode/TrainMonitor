@@ -74,9 +74,9 @@ def _decode_lines (s, linefunc):
 
 def _decode_cercaNumeroTrenoTrenoAutocomplete (s):
     def linefunc (line):
-        r = re.search('^(\d+)\s-\s(.+)\|(\d+)-(.+)$', line)
+        r = re.search('^(\d+)\s-\s(.+)\|(\d+)-(.+)-(\d+)$', line)
         if r is not None:
-            return r.group(2,4)
+            return r.group(2,4,5)
         
     return _decode_lines (s, linefunc)
 

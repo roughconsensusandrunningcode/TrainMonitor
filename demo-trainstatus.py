@@ -29,7 +29,7 @@ if __name__ == '__main__':
     # for the train number specified as its argument.
     # Unfortunately that could return more than one station.
     departures = api.call('cercaNumeroTrenoTrenoAutocomplete', trainNumber)
-    
+
     if len(departures) == 0:
         print ("Train {0} does not exists.".format(trainNumber))
         sys.exit()
@@ -40,12 +40,12 @@ if __name__ == '__main__':
     # we only care about the first result here (TODO)
     # Therefore, departures[0][1] is the station ID element #1 of the first result [0].
     departure_ID = departures[0][1]
-
+    midnight_of_today = departures[0][2]
     # This fetches the status for that train number from that departure_ID we just fetched.
     # It is required by viaggiatreno.it APIs.
     # train_status also includes the whole list of stops for that train (used a few lines later on).
-    train_status = api.call('andamentoTreno', departure_ID, trainNumber)
-
+    train_status = api.call('andamentoTreno', departure_ID, trainNumber, midnight_of_today)
+    
     # in these cases, the train has been cancelled.
     if train_status['tipoTreno'] == 'ST' or train_status['provvedimento'] == 1:
         print ("Train {0} cancelled".format(trainNumber))
