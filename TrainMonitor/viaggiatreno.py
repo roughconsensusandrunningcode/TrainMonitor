@@ -108,7 +108,7 @@ class API:
         plain = options.get('plainoutput', self.__plainoutput)
         verbose = options.get('verbose', self.__verbose)
         
-        base = 'http://www.viaggiatreno.it/viaggiatrenonew/resteasy/viaggiatreno/'
+        base = 'http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/'
         path = '/'.join(str(p) for p in params)
         url = base + function + '/' + path
 
